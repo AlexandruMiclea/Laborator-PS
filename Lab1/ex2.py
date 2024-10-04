@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.image as plt_img
 
 # a
 
@@ -16,7 +17,7 @@ plt.title('Subpct a')
 plt.plot(spatiu_a, semnal_a(spatiu_a))
 plt.stem(esant_a, semnal_a(esant_a))
 plt.savefig("plots/Exercitiul_2a.svg", format="svg")
-#plt.show()
+plt.show()
 
 # b
 
@@ -33,7 +34,7 @@ plt.title('Subpct b')
 plt.plot(spatiu_b, semnal_b(spatiu_b))
 plt.stem(esant_b, semnal_b(esant_b))
 plt.savefig("plots/Exercitiul_2b.svg", format="svg")
-#plt.show()
+plt.show()
 
 # c
 
@@ -46,7 +47,7 @@ plt.figure()
 plt.title('Subpct c')
 plt.plot(spatiu_c, semnal_c(spatiu_c))
 plt.savefig("plots/Exercitiul_2c.svg", format="svg")
-#plt.show()
+plt.show()
 
 # d
 
@@ -61,7 +62,7 @@ plt.figure()
 plt.title('Subpct d')
 plt.plot(spatiu_d, semnal_d(spatiu_d))
 plt.savefig("plots/Exercitiul_2d.svg", format="svg")
-#plt.show()
+plt.show()
 
 # e
 
@@ -69,16 +70,18 @@ semnal_e = np.random.rand(128,128)
 
 plt.figure()
 plt.title('Subpct e')
-plt.savefig("plots/Exercitiul_2e.svg", format="svg")
-#plt.imshow(semnal_e, cmap='gray')
+plt_img.imsave("plots/Exercitiul_2e.svg", format="svg", arr=semnal_e, cmap='gray')
+plt.imshow(semnal_e, cmap='gray')
 
 # f
 
-# easter eggerino
-
 semnal_f = np.ndarray((128,128))
+
+for i in range(128):
+    for j in range(128):
+        semnal_f[i][j] = (i + j) % 128
 
 plt.figure()
 plt.title('Subpct f')
-plt.savefig("plots/Exercitiul_2f.svg", format="svg")
+plt_img.imsave("plots/Exercitiul_2f.svg", format="svg", arr=semnal_f, cmap='gray')
 plt.imshow(semnal_f, cmap='gray')
