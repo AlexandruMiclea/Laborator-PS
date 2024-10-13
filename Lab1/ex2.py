@@ -25,7 +25,7 @@ frecventa = 800
 durata = 3
 nr_esant = 400
 
-spatiu_b = np.linspace(0, durata, 200000)
+spatiu_b = np.linspace(0, durata, 20000)
 esant_b = np.linspace(0, durata, nr_esant)
 semnal_b = lambda t: np.sin(2*np.pi*frecventa*t)
 
@@ -40,7 +40,7 @@ plt.show()
 
 frecventa = 240
 
-spatiu_c = np.linspace(0, 20/frecventa, 1000)
+spatiu_c = np.linspace(0, 20/frecventa, 10000)
 semnal_c = lambda t: np.mod(frecventa*t, 1)
 
 plt.figure()
