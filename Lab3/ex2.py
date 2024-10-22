@@ -28,6 +28,8 @@ plt.axhline(0, color = 'black')
 plt.title(f"Semnalul sinusoidal cu f = {f}")
 plt.scatter(spatiu_semnal, semnal, c = distance_x(np.abs(semnal)), cmap='viridis', s=10)
 plt.savefig("plots/Exercitiul_2_semnal.svg", format='svg')
+plt.savefig("plots/Exercitiul_2_semnal.png", format='png')
+plt.savefig("plots/Exercitiul_2_semnal.pdf", format='pdf')
 
 omega_list = [3, 5, 9, 12]
 
@@ -47,3 +49,5 @@ for omega in omega_list:
     plt.axvline(0, color = 'black')
     plt.scatter(semnal_complex.real, semnal_complex.imag, c=distance_xy(semnal_complex.real, semnal_complex.imag), cmap='viridis', s=10)
     plt.savefig(f"plots/Exercitiul_2_omega_{omega}.svg", format='svg')
+    plt.savefig(f"plots/Exercitiul_2_omega_{omega}.png", format='png')
+    plt.savefig(f"plots/Exercitiul_2_omega_{omega}.pdf", format='pdf')

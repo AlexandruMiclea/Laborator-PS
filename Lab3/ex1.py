@@ -19,6 +19,8 @@ for line in range(8):
     #axs[line // 2][line % 2].legend()
     
 plt.savefig('plots/Exercitiul_1.svg', format = "svg")
+plt.savefig('plots/Exercitiul_1.png', format = "png")
+plt.savefig('plots/Exercitiul_1.pdf', format = "pdf")
 
 # impart matricea fourier la sqrt(8) pentru a aduce elementele de pe diagonala principala la 1
 matrice_fourier_8 = matrice_fourier_8 / np.sqrt(8)
