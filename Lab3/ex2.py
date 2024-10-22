@@ -18,17 +18,16 @@ culoare = np.ndarray((3, fs * 1000))
 functie_culoare = lambda dist: (dist * 0.35 + 0.4, dist * 0.65 + 0.2, dist * 0.45 + 0.25)
 distanta_euclidiana = lambda comp: np.sqrt(comp.real**2 + comp.imag**2)
 
+distance_x = lambda x : x
+distance_xy = lambda x, y : np.sqrt(x**2 + y**2)
+
 # afisez semnalul 
 
 plt.figure()
 plt.axhline(0, color = 'black')
 plt.title(f"Semnalul sinusoidal cu f = {f}")
-plt.plot(spatiu_semnal, semnal)
+plt.scatter(spatiu_semnal, semnal, c = distance_x(np.abs(semnal)), cmap='viridis', s=10)
 plt.savefig("plots/Exercitiul_2_semnal.svg", format='svg')
-
-# TODO pentru un numar in intervalul [0,1] vreau un color code
-# dupa care sa vad cum il mapez functiei
-
 
 omega_list = [3, 5, 9, 12]
 
@@ -46,5 +45,5 @@ for omega in omega_list:
     plt.ylabel("Imaginar")
     plt.axhline(0, color = 'black')
     plt.axvline(0, color = 'black')
-    plt.plot(semnal_complex.real, semnal_complex.imag, color = 'purple')
+    plt.scatter(semnal_complex.real, semnal_complex.imag, c=distance_xy(semnal_complex.real, semnal_complex.imag), cmap='viridis', s=10)
     plt.savefig(f"plots/Exercitiul_2_omega_{omega}.svg", format='svg')
