@@ -22,6 +22,10 @@ plt.figure()
 plt.title('Semnal analizat')
 plt.plot(spatiu_semnal, semnal_smecher(spatiu_semnal))
 
+plt.savefig("plots/Exercitiul_1_semnal.svg", format='svg')
+plt.savefig("plots/Exercitiul_1_semnal.png", format='png')
+plt.savefig("plots/Exercitiul_1_semnal.pdf", format='pdf')
+
 # liste folosite pentru plotarea diferentelor de timp
 timp_standard = np.zeros(7)
 timp_numpy = np.zeros(7)
@@ -88,6 +92,12 @@ else:
 plt.figure()
 plt.title('Durata executare implementare DFT vs np.fft.fft')
 plt.yscale('log')
-plt.plot([1,2,3,4,5,6,7], timp_numpy, label = 'np.fft.fft')
-plt.plot([1,2,3,4,5,6,7], timp_standard, label = 'DFT propriu')
+plt.xlabel('Dimensiune vector')
+plt.ylabel('Durata (s)')
+plt.plot(lista_dimensiuni_vector, timp_numpy, label = 'np.fft.fft')
+plt.plot(lista_dimensiuni_vector, timp_standard, label = 'DFT propriu')
 plt.legend()
+
+plt.savefig("plots/Exercitiul_1_durata.svg", format='svg')
+plt.savefig("plots/Exercitiul_1_durata.png", format='png')
+plt.savefig("plots/Exercitiul_1_durata.pdf", format='pdf')
