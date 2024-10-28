@@ -37,23 +37,28 @@ for i in range(grupe.shape[0]):
 # detecta corect va undeva fi in preajma lui 22 kHz.
 
 modul_complex = lambda x: np.sqrt(x.real**2 + x.imag**2)
-fft_grupe = modul_complex(fft_grupe).T
+
 
 # configurez o imagine care sa imi arate frecventele pentru o jumatate de grupa
 # (pe principiul ca in a doua jumatate se vor afla frecventele negative)
 
 # pe axa X o sa vreau timpul in milisecunde, pe axa Y valoarea frecventei in Hz
 
+# observatie dupa ce am rezolvat 7 -> am afisat rezultatul aplicand doar log peste valori. 
+# daca inmultesc cu 10 acele valori voi avea valorile in decibeli
+
+fft_grupe = 10 * np.log10(modul_complex(fft_grupe).T)
+
 plt.figure()
 plt.imshow(fft_grupe[:fft_grupe.shape[0] // 2:,:],
            cmap = 'magma',
            aspect = 'auto',
-           norm = 'log',
+           #norm = 'log',
            origin = 'lower',
            extent = [0, fft_grupe.shape[0] * fft_grupe.shape[1] * 100 / (rata_esantionare / 1000 * 199),
                      0, (rata_esantionare / 2)])
 
-plt.colorbar(label='Prevalenta unei frecvente')
+plt.colorbar(label='Prevalenta unei frecvente (dB)')
 plt.xlabel('Momentul timp (ms)')
 plt.ylabel('Frecventa prezenta (Hz)')
 
