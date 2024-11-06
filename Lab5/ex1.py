@@ -79,7 +79,6 @@ plt.title('Transformata centrata in 0')
 plt.plot(f, X2)
 plt.ylabel('|X(ω)|')
 plt.xlabel('Frecventa (Hz)')
-plt.xscale('log')
 
 pp.savefig()
 plt.savefig("plots/Exercitiul_1_FFT_centrat.svg", format='svg')
@@ -119,17 +118,16 @@ plt.savefig("plots/Exercitiul_1_luna.png", format='png')
 
 # i
 
-# fac top 10 valori, iar cea cu frecventa cea mai inalta este 
+# nu prea ma duce capul sa filtrez semnalul, insa am sa fac media pe zile
+# ma voi folosi de plot-ul precedent
 
-top_10 = np.argsort(X2)[-10:]
-top_10 = top_10[::-1]
+medie_zile = x[1056:1056+744]
+medie_zile = np.array([sum(medie_zile[i:i+24]) / 24 for i in [x * 24 for x in range(744 // 24)]])
 
-componente = list()
+plt.plot([(x + 1) * 24 for x in range(744 // 24)], medie_zile)
 
-for (idx, val) in enumerate(X2):
-    if val > 2:
-        componente.append([idx, val])
-
-componente = np.array(componente)
+pp.savefig()
+plt.savefig("plots/Exercitiul_1_medie.svg", format='svg')
+plt.savefig("plots/Exercitiul_1_medie.png", format='png')
 
 pp.close()
