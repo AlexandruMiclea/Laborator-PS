@@ -121,10 +121,15 @@ plt.savefig("plots/Exercitiul_1_luna.png", format='png')
 # nu prea ma duce capul sa filtrez semnalul, insa am sa fac media pe zile
 # ma voi folosi de plot-ul precedent
 
-medie_zile = x[1056:1056+744]
-medie_zile = np.array([sum(medie_zile[i:i+24]) / 24 for i in [x * 24 for x in range(744 // 24)]])
+# LE facem un rolling average filter
 
-plt.plot([(x + 1) * 24 for x in range(744 // 24)], medie_zile)
+medie_zile = x[1056:1056+744]
+
+w = 8 # facem media pentru cate 8 ore
+
+medie_zile = np.convolve(medie_zile, np.ones(w), 'same') / w
+
+plt.plot([i for i in range(744)], medie_zile)
 
 pp.savefig()
 plt.savefig("plots/Exercitiul_1_medie.svg", format='svg')
