@@ -136,7 +136,7 @@ print(f'MSE c) = {MSE}')
 p = 430
 m = 430
 
-# pare ca pentru p = m undeva in jurul lui 400-600 imi invata aproximativ perfect seria de timp
+# pare ca pentru p = m undeva in jurul lui 400-5499 imi invata aproximativ perfect seria de timp
 
 y = spatiu_serie_timp[N - m:][::-1]
 N_y = y.shape[0]

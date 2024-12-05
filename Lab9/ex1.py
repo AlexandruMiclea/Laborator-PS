@@ -25,7 +25,7 @@ axs[0].set_title('Ecuatie grad 2')
 spatiu_serie_timp = np.add(spatiu_serie_timp, noise)
 axs[1].plot(noise)
 axs[1].set_title('Zgomot')
-spatiu_serie_timp += np.add(spatiu_serie_timp, spatiu_semnal)
+spatiu_serie_timp = np.add(spatiu_serie_timp, spatiu_semnal)
 axs[2].plot(spatiu_semnal)
 axs[2].set_title('Semnal')
 

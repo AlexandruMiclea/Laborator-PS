@@ -17,7 +17,7 @@ spatiu_semnal = semnal(3,6)
 noise = np.random.random(size=N) / 10
 
 spatiu_serie_timp = np.add(spatiu_serie_timp, noise)
-spatiu_serie_timp += np.add(spatiu_serie_timp, spatiu_semnal)
+spatiu_serie_timp = np.add(spatiu_serie_timp, spatiu_semnal)
 
 def exponential_mean(timeseries, alpha):
     result_array = [timeseries[0]]
@@ -27,21 +27,31 @@ def exponential_mean(timeseries, alpha):
     
     return result_array
 
-alpha = 0.1
+
+# valoarea care imi ofera o medie aproape de seria mea de timp, fara sa imi preia din zgomot
+alpha = 0.15
 
 spatiu_serie_timp_mediata = exponential_mean(spatiu_serie_timp, alpha)
 
 # alternating minimization
 
-fig, axs = plt.subplots(2)
-fig.suptitle('Serie timp mediata')
-axs[0].plot(spatiu_serie_timp)
-axs[0].set_xlabel("Ordin esantion")
-axs[0].set_ylabel("Valoare")
-axs[1].plot(spatiu_serie_timp_mediata)
-axs[1].set_xlabel("Ordin esantion")
-axs[1].set_ylabel("Valoare")
-plt.show()
+fig, ax = plt.subplots()
+fig.subplots_adjust(bottom = 0.2)
+ax.plot(spatiu_serie_timp, label = "Serie timp originala")
+line, = ax.plot(spatiu_serie_timp_mediata, label = "Serie timp mediata")
+
+def update_mean(val):
+    
+    alpha = alpha_slider.val
+    
+    spatiu_serie_timp_mediata = exponential_mean(spatiu_serie_timp, alpha)
+    
+    line.set_ydata(spatiu_serie_timp_mediata)
+    fig.canvas.draw_idle()
+
+ax_alpha = plt.axes([0.25, 0.1, 0.65, 0.03])
+alpha_slider = plt.Slider(ax = ax_alpha, label = 'Alpha', valmin = 0, valmax = 1, valinit = alpha)
+alpha_slider.on_changed(update_mean)
 
 pp.savefig()
 plt.savefig("plots/Exercitiul_2.svg", format='svg')

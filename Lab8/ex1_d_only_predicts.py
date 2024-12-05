@@ -1,34 +1,36 @@
-# for testing purposes only, not supposed to be run!
+# diferenta intre acest exercitiu si cel precedent este ca antrenez multimea de 
+# valori prezise folosindu-ma de alte valori prezise in trecut (altfel zis in 
+# fisierul main fiecare predictie reprezinta inmultirea x_star cu valorile
+# ground_truth). aici ma folosesc atat de valori ground_truth (in primii p pasi)
+# dupa care ma folosesc de valorile prezise
 
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy
-
-# d
+from matplotlib.backends.backend_pdf import PdfPages
 
 N = 1000
+pp = PdfPages('plots/Exercitiul_1_preds.pdf')
 
 ec_grad2  = lambda x: x**2
 spatiu_semnal = np.linspace(0,1,N)
 semnal = lambda f1, f2: 0.1 * np.sin(2 * np.pi * f1 * spatiu_semnal) + 0.2 * np.sin(2 * np.pi * f2 * spatiu_semnal)
 
-# 1 indexed
 spatiu_ecuatie = np.linspace(1,2,N)
 spatiu_serie_timp = ec_grad2(spatiu_ecuatie)
 spatiu_semnal = semnal(3,6)
 
 noise = np.random.random(size=N) / 10
-
 spatiu_serie_timp = np.add(spatiu_serie_timp, noise)
 spatiu_serie_timp = np.add(spatiu_serie_timp, spatiu_semnal)
 
-# reference: https://matplotlib.org/stable/gallery/widgets/slider_demo.html
-# https://www.geeksforgeeks.org/matplotlib-slider-widget/
+# d
 
-# slidere pentru setarea valorilor lui p si m
+# am generat best values folosind aux_brute_best_params
+# rezultatele pot varia in functie de zgomot!
 
-p = 128
-m = 256
+p = 341
+m = 430
 
 y = spatiu_serie_timp[N - m:][::-1]
 N_y = y.shape[0]
@@ -49,7 +51,6 @@ for i in range(m):
     predicted_N = predicted_values.shape[0]
     predicted_value = x_star.T @ predicted_values[:p]
     predicted_values = np.concatenate((np.array([predicted_value]), predicted_values))
-    
 
 fig, ax = plt.subplots()
 fig.subplots_adjust(bottom = 0.4)
@@ -96,3 +97,9 @@ m_slider.on_changed(update_predictions)
 
 fig.legend()
 fig.show()
+
+pp.savefig()
+plt.savefig("plots/Exercitiul_1d_preds.svg", format='svg')
+plt.savefig("plots/Exercitiul_1d_preds.png", format='png')
+
+pp.close()
