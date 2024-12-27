@@ -29,8 +29,8 @@ spatiu_serie_timp = np.add(spatiu_serie_timp, spatiu_semnal)
 # am generat best values folosind aux_brute_best_params
 # rezultatele pot varia in functie de zgomot!
 
-p = 341
-m = 430
+p = 20
+m = 100
 
 y = spatiu_serie_timp[N - m:][::-1]
 N_y = y.shape[0]

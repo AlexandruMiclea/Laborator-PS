@@ -133,8 +133,8 @@ print(f'MSE c) = {MSE}')
 
 # d
 
-p = 430
-m = 430
+p = 400
+m = 200
 
 # pare ca pentru p = m undeva in jurul lui 400-5499 imi invata aproximativ perfect seria de timp
 
