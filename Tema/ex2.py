@@ -33,12 +33,16 @@ YCbCr_to_RGB = np.array([[1, 0, 1.402], [1, -0.344136, -0.714136], [1, 1.772, 0]
 for i in range(X.shape[0]):
     for j in range(X.shape[1]):
         X_YCbCr[i,j,:] = RGB_to_YCbCr @ X[i,j,:]
-        
-X_YCbCr = np.round(X_YCbCr)
-X_YCbCr = X_YCbCr.astype('uint8')
-        
+                
 X_YCbCr[:,:,1] += 128
 X_YCbCr[:,:,2] += 128
+
+for i in range(X.shape[0]):
+    for j in range(X.shape[1]):
+        for k in range(3):
+            X_YCbCr[i,j,k] = min(max(0, np.round(X_YCbCr[i,j,k])),255)
+
+X_YCbCr = X_YCbCr.astype('uint8')
 
 Y_channel = X_YCbCr[:,:,0]
 Cb_channel = X_YCbCr[:,:,1]
@@ -150,20 +154,22 @@ X_YCbCr_compressed[:,:,2] -= 128
 for i in range(X_YCbCr_compressed.shape[0]):
     for j in range(X_YCbCr_compressed.shape[1]):
         X_compressed[i,j,:] = YCbCr_to_RGB @ X_YCbCr_compressed[i,j,:]
+        for k in range(3):
+            X_compressed[i,j,k] = min(max(0, np.round(X_compressed[i,j,k])),255)
         
-X_compressed = np.round(X_compressed)
 X_compressed = X_compressed.astype('uint8')
 
 plt.figure()
 plt.subplot(131).imshow(Y_compressed, cmap = 'gray')
-plt.title('Original')
+plt.title('Y')
 plt.subplot(132).imshow(Cb_compressed_resized, cmap='gray')
-plt.title('After JPEG compression and back')
+plt.title('Cb')
 plt.subplot(133).imshow(Cr_compressed_resized, cmap='gray')
+plt.title('Cr')
 plt.show()
 
 plt.figure()
-plt.subplot(121).imshow(X)
+plt.subplot(121).imshow(misc.face())
 plt.title('Original')
 plt.subplot(122).imshow(X_compressed)
 plt.title('After JPEG compression and back')
