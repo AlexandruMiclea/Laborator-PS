@@ -3,12 +3,10 @@ import matplotlib.pyplot as plt
 from scipy import misc, ndimage
 from scipy.fft import dctn, idctn
 import cv2 as cv
+import argparse
+import sys
 
 # constants
-
-# TODO remove hardcoded path
-video_path = './videos/original.mp4'
-output_path = './videos/compressed.mp4'
 
 Q_luminance = [[16, 11, 10, 16, 24, 40, 51, 61],
               [12, 12, 14, 19, 26, 28, 60, 55],
@@ -167,35 +165,52 @@ def process_image(frame):
     return X_compressed
 
 
-# read the video file
-video_cv = cv.VideoCapture(video_path)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input-path", type=str)
+    parser.add_argument("--output-path", type=str)
 
-if not video_cv.isOpened():
-    print("Error: Cannot open video.")
+    args = parser.parse_args()
 
-frames = []
+    video_path = args.input_path
+    output_path = args.output_path
 
-while True:
-    ret, frame = video_cv.read()
-    if not ret:
-        print("End of video.")
-        break
-    
-    frames.append(frame)
+    if video_path is None:
+        print("Please give a valid input video path!")
+        sys.exit(1)
 
-video_cv.release()
+    if output_path is None:
+        print("Please give a valid output video path!")
+        sys.exit(1)
 
-frames = np.array(frames)
-compressed_frames = np.zeros(frames.shape, dtype = np.uint8)
+    # read the video file
+    video_cv = cv.VideoCapture(video_path)
 
-# process each frame
-for (idx, frame) in enumerate(frames):
-    compressed_frames[idx] = process_image(frame)
-    print(f"Frame {idx + 1}/{compressed_frames.shape[0]} processed")
+    if not video_cv.isOpened():
+        print("Error: Cannot open video.")
 
-# output the video
+    frames = []
 
-video_output_cv = cv.VideoWriter(output_path, cv.VideoWriter_fourcc(*'mp4v'), 30, (compressed_frames[0].shape[1], compressed_frames[0].shape[0]))
-for frame in compressed_frames:
-    video_output_cv.write(frame)
-video_output_cv.release()
+    while True:
+        ret, frame = video_cv.read()
+        if not ret:
+            break
+        
+        frames.append(frame)
+
+    video_cv.release()
+
+    frames = np.array(frames)
+    compressed_frames = np.zeros(frames.shape, dtype = np.uint8)
+
+    # process each frame
+    for (idx, frame) in enumerate(frames):
+        compressed_frames[idx] = process_image(frame)
+        print(f"Frame {idx + 1}/{compressed_frames.shape[0]} processed")
+
+    # output the video
+
+    video_output_cv = cv.VideoWriter(output_path, cv.VideoWriter_fourcc(*'mp4v'), 30, (compressed_frames[0].shape[1], compressed_frames[0].shape[0]))
+    for frame in compressed_frames:
+        video_output_cv.write(frame)
+    video_output_cv.release()
